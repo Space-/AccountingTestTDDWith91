@@ -9,24 +9,31 @@ namespace AccountingTestTDDWith91
     {
         private List<Budget> _budgets;
         private IRepository _budgetRepository;
+        private Accounting _accounting;
 
         [SetUp]
-        public void Setup()
+        public void TestInit()
         {
             _budgetRepository = Substitute.For<IRepository>();
+            _accounting = new Accounting(_budgetRepository);
         }
 
         [Test]
         public void No_Budget()
         {
             _budgets = new List<Budget>();
-            _budgetRepository.GetAll().Returns(_budgets);
+            GivenBudget(_budgets);
 
-            var accounting = new Accounting(_budgetRepository);
-            var totalBudget = accounting.QueryBudget(
+            _accounting = new Accounting(_budgetRepository);
+            var totalBudget = _accounting.QueryBudget(
                 new DateTime(2019, 4, 1), new DateTime(2019, 4, 1));
 
             Assert.AreEqual(0, totalBudget);
+        }
+
+        private void GivenBudget(List<Budget> budgets)
+        {
+            _budgetRepository.GetAll().Returns(budgets);
         }
 
         [Test]
@@ -37,24 +44,12 @@ namespace AccountingTestTDDWith91
                 new Budget() { YearMonth = "201904", Amount = 1 }
             };
 
-            _budgetRepository.GetAll().Returns(_budgets);
+            GivenBudget(_budgets);
 
-            var accounting = new Accounting(_budgetRepository);
-            var totalBudget = accounting.QueryBudget(
+            var totalBudget = _accounting.QueryBudget(
                 new DateTime(2019, 4, 1), new DateTime(2019, 4, 1));
 
             Assert.AreEqual(1, totalBudget);
         }
-    }
-
-    public interface IRepository
-    {
-        List<Budget> GetAll();
-    }
-
-    public class Budget
-    {
-        public string YearMonth { get; set; }
-        public int Amount { get; set; }
     }
 }
