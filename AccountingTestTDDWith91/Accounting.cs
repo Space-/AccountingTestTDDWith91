@@ -6,17 +6,17 @@ namespace AccountingTestTDDWith91
 {
     public class Accounting
     {
-        private IRepository _budgetRepository;
+        private IBudgetRepository _budgetBudgetRepository;
 
-        public Accounting(IRepository budgetRepository)
+        public Accounting(IBudgetRepository budgetBudgetRepository)
         {
-            _budgetRepository = budgetRepository;
+            _budgetBudgetRepository = budgetBudgetRepository;
         }
 
         public decimal QueryBudget(DateTime startDate, DateTime endDate)
         {
             var currentYearMonth = startDate.ToString("yyyyMM");
-            var budget = _budgetRepository.GetAll().FirstOrDefault(x => x.YearMonth == currentYearMonth);
+            var budget = _budgetBudgetRepository.GetAll().FirstOrDefault(x => x.YearMonth == currentYearMonth);
 
             return budget?.Amount ?? 0;
         }

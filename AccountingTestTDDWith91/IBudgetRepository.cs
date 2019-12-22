@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace AccountingTestTDDWith91
 {
-    public interface IRepository
+    public interface IBudgetRepository
     {
         List<Budget> GetAll();
     }

@@ -7,14 +7,14 @@ namespace AccountingTestTDDWith91
 {
     public class AccountingTest
     {
-        private IRepository _budgetRepository;
+        private IBudgetRepository _budgetBudgetRepository;
         private Accounting _accounting;
 
         [SetUp]
         public void TestInit()
         {
-            _budgetRepository = Substitute.For<IRepository>();
-            _accounting = new Accounting(_budgetRepository);
+            _budgetBudgetRepository = Substitute.For<IBudgetRepository>();
+            _accounting = new Accounting(_budgetBudgetRepository);
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace AccountingTestTDDWith91
 
         private void GivenBudgets(List<Budget> budgets)
         {
-            _budgetRepository.GetAll().Returns(budgets);
+            _budgetBudgetRepository.GetAll().Returns(budgets);
         }
     }
 }
