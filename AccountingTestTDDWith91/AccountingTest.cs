@@ -20,12 +20,4 @@ namespace AccountingTestTDDWith91
             Assert.AreEqual(0, totalBudget);
         }
     }
-
-    public class Accounting
-    {
-        public decimal QueryBudget(DateTime dateTime, DateTime dateTime1)
-        {
-            return 0;
-        }
-    }
 }
