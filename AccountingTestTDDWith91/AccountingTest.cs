@@ -16,6 +16,8 @@ namespace AccountingTestTDDWith91
             var accounting = new Accounting();
             var totalBudget = accounting.QueryBudget(
                 new DateTime(2019, 4, 1), new DateTime(2019, 4, 1));
+
+            Assert.AreEqual(0, totalBudget);
         }
     }
 
