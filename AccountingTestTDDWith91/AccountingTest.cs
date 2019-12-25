@@ -21,7 +21,12 @@ namespace AccountingTestTDDWith91
         public void No_Budget()
         {
             GivenBudgets(new List<Budget>());
-            TotalBudgetShouldBe(0, new DateTime(2019, 4, 1), new DateTime(2019, 4, 1));
+            GivenPeriod(new Period(new DateTime(2019, 4, 1), new DateTime(2019, 4, 1)));
+        }
+
+        private void GivenPeriod(Period period)
+        {
+            _accounting.QueryBudgetInPeriod(period);
         }
 
         [Test]
@@ -31,13 +36,6 @@ namespace AccountingTestTDDWith91
             {
                 new Budget() { YearMonth = "201904", Amount = 1 }
             });
-
-            TotalBudgetShouldBe(1, new DateTime(2019, 4, 1), new DateTime(2019, 4, 1));
-        }
-
-        private void TotalBudgetShouldBe(int expected, DateTime startDate, DateTime endDate)
-        {
-            Assert.AreEqual(expected, _accounting.QueryBudget(startDate, endDate));
         }
 
         private void GivenBudgets(List<Budget> budgets)

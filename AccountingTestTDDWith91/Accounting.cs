@@ -1,22 +1,20 @@
-using System;
 using System.Linq;
-using System.Net;
 
 namespace AccountingTestTDDWith91
 {
     public class Accounting
     {
-        private IBudgetRepository _budgetBudgetRepository;
+        private readonly IBudgetRepository _budgetRepository;
 
-        public Accounting(IBudgetRepository budgetBudgetRepository)
+        public Accounting(IBudgetRepository budgetRepository)
         {
-            _budgetBudgetRepository = budgetBudgetRepository;
+            _budgetRepository = budgetRepository;
         }
 
-        public decimal QueryBudget(DateTime startDate, DateTime endDate)
+        public decimal QueryBudgetInPeriod(Period period)
         {
-            var currentYearMonth = startDate.ToString("yyyyMM");
-            var budget = _budgetBudgetRepository.GetAll().FirstOrDefault(x => x.YearMonth == currentYearMonth);
+            var currentYearMonth = period.StartDate.ToString("yyyyMM");
+            var budget = _budgetRepository.GetAll().FirstOrDefault(x => x.YearMonth == currentYearMonth);
 
             return budget?.Amount ?? 0;
         }
