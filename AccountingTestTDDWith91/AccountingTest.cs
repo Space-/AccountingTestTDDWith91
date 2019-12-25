@@ -9,6 +9,7 @@ namespace AccountingTestTDDWith91
     {
         private IBudgetRepository _budgetRepository;
         private Accounting _accounting;
+        private Period _budgetPeriod;
 
         [SetUp]
         public void TestInit()
@@ -22,11 +23,7 @@ namespace AccountingTestTDDWith91
         {
             GivenBudgets(new List<Budget>());
             GivenPeriod(new Period(new DateTime(2019, 4, 1), new DateTime(2019, 4, 1)));
-        }
-
-        private void GivenPeriod(Period period)
-        {
-            _accounting.QueryBudgetInPeriod(period);
+            TotalBudgetShouldBe(0);
         }
 
         [Test]
@@ -36,11 +33,24 @@ namespace AccountingTestTDDWith91
             {
                 new Budget() { YearMonth = "201904", Amount = 1 }
             });
+
+            GivenPeriod(new Period(new DateTime(2019, 4, 1), new DateTime(2019, 4, 1)));
+            TotalBudgetShouldBe(1);
+        }
+
+        private void GivenPeriod(Period budgetPeriod)
+        {
+            _budgetPeriod = budgetPeriod;
         }
 
         private void GivenBudgets(List<Budget> budgets)
         {
             _budgetRepository.GetAll().Returns(budgets);
+        }
+
+        private void TotalBudgetShouldBe(int expected)
+        {
+            Assert.AreEqual(expected, _accounting.QueryBudgetInPeriod(_budgetPeriod));
         }
     }
 }
